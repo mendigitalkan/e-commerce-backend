@@ -7,11 +7,11 @@ import { type UserAttributes, UserModel } from '../../models/user'
 import { hashPassword } from '../../utilities/scure_password'
 import { generateAccessToken } from '../../utilities/jwt'
 
-export const login = async (req: any, res: Response): Promise<any> => {
+export const userLogin = async (req: any, res: Response): Promise<any> => {
   const requestBody = req.body as UserAttributes
 
   const emptyField = requestChecker({
-    requireList: ['userEmail', 'userPassword'],
+    requireList: ['userEmail', 'userPassword', 'userPhoneNumber'],
     requestData: requestBody
   })
 
@@ -23,7 +23,6 @@ export const login = async (req: any, res: Response): Promise<any> => {
 
   try {
     const user = await UserModel.findOne({
-      raw: true,
       where: {
         deleted: { [Op.eq]: 0 },
         userEmail: { [Op.eq]: requestBody.userEmail }
@@ -44,8 +43,7 @@ export const login = async (req: any, res: Response): Promise<any> => {
     }
 
     const token = generateAccessToken({
-      userId: user.userId,
-      role: 'superAdmin'
+      userId: user.userId
     })
 
     const response = ResponseData.default

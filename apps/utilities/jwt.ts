@@ -3,11 +3,10 @@ import { CONFIG } from '../configs'
 
 export interface JwtPayloadTypes {
   userId: string
-  role: 'admin' | 'superAdmin'
 }
 
-export const generateAccessToken = (username: JwtPayloadTypes): any => {
-  return jwt.sign(username, CONFIG.secret.token ?? '', { expiresIn: '1800s' })
+export const generateAccessToken = (userId: JwtPayloadTypes): any => {
+  return jwt.sign(userId, CONFIG.secret.token ?? '', { expiresIn: '1800s' })
 }
 
 export const verifyAccessToken = (token: string): any => {

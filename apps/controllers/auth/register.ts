@@ -6,13 +6,12 @@ import { type UserAttributes, UserModel } from '../../models/user'
 import { requestChecker } from '../../utilities/requestCheker'
 import { hashPassword } from '../../utilities/scure_password'
 import { v4 as uuidv4 } from 'uuid'
-import { generateAccessToken } from '../../utilities/jwt'
 
-export const register = async (req: any, res: Response): Promise<any> => {
+export const userRegister = async (req: any, res: Response): Promise<any> => {
   const requestBody = req.body as UserAttributes
 
   const emptyField = requestChecker({
-    requireList: ['userName', 'userEmail', 'userPassword', 'userRole'],
+    requireList: ['userName', 'userEmail', 'userPassword', 'userPhoneNumber'],
     requestData: requestBody
   })
 
@@ -41,13 +40,8 @@ export const register = async (req: any, res: Response): Promise<any> => {
     requestBody.userId = uuidv4()
     await UserModel.create(requestBody)
 
-    const token = generateAccessToken({
-      userId: requestBody.userId,
-      role: 'superAdmin'
-    })
-
     const response = ResponseData.default
-    response.data = { token }
+    response.data = { message: 'success' }
     return res.status(StatusCodes.CREATED).json(response)
   } catch (error: any) {
     const message = `unable to process request! error ${error.message}`

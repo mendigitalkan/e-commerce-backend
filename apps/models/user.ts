@@ -4,10 +4,11 @@ import { sequelize } from '.'
 import { type ZygoteAttributes, ZygoteModel } from './zygote'
 
 export interface UserAttributes extends ZygoteAttributes {
-  userPassword: string
   userId: string
   userName: string
   userEmail: string
+  userPassword: string
+  userPhoneNumber: string
 }
 
 // we're telling the Model that 'id' is optional
@@ -20,7 +21,7 @@ interface UserInstance
     UserAttributes {}
 
 export const UserModel = sequelize.define<UserInstance>(
-  'user',
+  'users',
   {
     ...ZygoteModel,
     userId: {
@@ -38,12 +39,16 @@ export const UserModel = sequelize.define<UserInstance>(
     userEmail: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    userPhoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   },
   {
     ...sequelize,
     timestamps: false,
-    tableName: 'user',
+    tableName: 'users',
     deletedAt: false,
     paranoid: true,
     underscored: true,
