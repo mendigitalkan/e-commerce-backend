@@ -3,14 +3,14 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { Op } from 'sequelize'
 import { requestChecker } from '../../utilities/requestCheker'
-import { type CrudExampleAttributes, CrudExampleModel } from '../../models/crudExample'
+import { ProductModel, type ProductAttributes } from '../../models/products'
 
-export const removeCrudExample = async (req: any, res: Response): Promise<any> => {
-  const requestQuery = req.query as CrudExampleAttributes
+export const updateProduct = async (req: any, res: Response): Promise<any> => {
+  const requestBody = req.body as ProductAttributes
 
   const emptyField = requestChecker({
-    requireList: ['crudExampleId'],
-    requestData: requestQuery
+    requireList: ['productId'],
+    requestData: requestBody
   })
 
   if (emptyField.length > 0) {
@@ -20,10 +20,10 @@ export const removeCrudExample = async (req: any, res: Response): Promise<any> =
   }
 
   try {
-    const result = await CrudExampleModel.findOne({
+    const result = await ProductModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },
-        crudExampleId: { [Op.eq]: requestQuery.crudExampleId }
+        productId: { [Op.eq]: requestBody.productId }
       }
     })
 
@@ -33,8 +33,27 @@ export const removeCrudExample = async (req: any, res: Response): Promise<any> =
       return res.status(StatusCodes.NOT_FOUND).json(response)
     }
 
-    result.deleted = 1
-    void result.save()
+    const newData: ProductAttributes | any = {
+      ...(requestBody.productName.length > 0 && {
+        productName: requestBody.productName
+      }),
+      ...(requestBody.productDescription.length > 0 && {
+        productDescription: requestBody.productDescription
+      }),
+      ...(requestBody.productImages.length > 0 && {
+        productImages: requestBody.productImages
+      }),
+      ...(requestBody.productPrice !== null && {
+        productPrice: requestBody.productPrice
+      })
+    }
+
+    await ProductModel.update(newData, {
+      where: {
+        deleted: { [Op.eq]: 0 },
+        productId: { [Op.eq]: requestBody.productId }
+      }
+    })
 
     const response = ResponseData.default
     response.data = { message: 'success' }

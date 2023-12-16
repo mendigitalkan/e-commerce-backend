@@ -3,13 +3,13 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { requestChecker } from '../../utilities/requestCheker'
 import { v4 as uuidv4 } from 'uuid'
-import { CrudExampleModel, type CrudExampleAttributes } from '../../models/crudExample'
+import { ProductModel, type ProductAttributes } from '../../models/products'
 
-export const createCrudExample = async (req: any, res: Response): Promise<any> => {
-  const requestBody = req.body as CrudExampleAttributes
+export const createProduct = async (req: any, res: Response): Promise<any> => {
+  const requestBody = req.body as ProductAttributes
 
   const emptyField = requestChecker({
-    requireList: ['crudExampleName'],
+    requireList: ['productName', 'productDescription', 'productImages', 'productPrice'],
     requestData: requestBody
   })
 
@@ -20,8 +20,8 @@ export const createCrudExample = async (req: any, res: Response): Promise<any> =
   }
 
   try {
-    requestBody.crudExampleId = uuidv4()
-    await CrudExampleModel.create(requestBody)
+    requestBody.productId = uuidv4()
+    await ProductModel.create(requestBody)
 
     const response = ResponseData.default
     const result = { message: 'success' }
