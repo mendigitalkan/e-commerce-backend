@@ -3,24 +3,25 @@
 
 import express, { type Express, type Request, type Response } from 'express'
 import { UsersController } from '../../controllers/auth'
+import { middleware } from '../../middlewares'
 
 export const userRoutes = (app: Express): void => {
-  const route = express.Router()
-  app.use('/api/v1/users', route)
+  const router = express.Router()
+  app.use('/api/v1/users', middleware.useAuthorization, router)
 
-  route.get(
+  router.get(
     '/list',
     async (req: Request, res: Response) => await UsersController.findAll(req, res)
   )
-  route.get(
+  router.get(
     '/detail/:userId',
     async (req: Request, res: Response) => await UsersController.findOne(req, res)
   )
-  route.post(
+  router.post(
     '/login',
     async (req: Request, res: Response) => await UsersController.login(req, res)
   )
-  route.post(
+  router.post(
     '/register',
     async (req: Request, res: Response) => await UsersController.register(req, res)
   )

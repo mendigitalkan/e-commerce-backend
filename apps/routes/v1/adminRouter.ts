@@ -10,7 +10,7 @@ import { removeAdmin } from '../../controllers/admin/remove'
 
 export const adminRouter = (app: Express): void => {
   const router = express.Router()
-  app.use('/api/v1/admin', middleware.useAuthorization, router)
+  app.use('/api/v1/admin', middleware.useAuthorization, middleware.useJwtAccess, router)
   router.get('/list', async (req: Request, res: Response) => await findAllAdmin(req, res))
   router.get(
     '/detail/:adminId',
