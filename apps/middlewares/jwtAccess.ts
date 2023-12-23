@@ -24,7 +24,6 @@ export const useJwtAccess = (
     try {
       const decoded = verifyAccessToken(token) as { userId: string }
       req.user = decoded
-      console.log(req)
     } catch (error: any) {
       const message = 'Invalid Authorization.'
       const response = ResponseData.error(message)

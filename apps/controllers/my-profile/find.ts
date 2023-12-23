@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { Op } from 'sequelize'
 import { requestChecker } from '../../utilities/requestCheker'
-import { AdminModel } from '../../models/admin'
+import { UserModel } from '../../models/user'
 
 export const findMyProfile = async (req: any, res: Response): Promise<any> => {
   const emptyField = requestChecker({
@@ -18,16 +18,17 @@ export const findMyProfile = async (req: any, res: Response): Promise<any> => {
   }
 
   try {
-    const admin = await AdminModel.findOne({
+    const admin = await UserModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },
-        adminId: { [Op.eq]: req.header('x-user-id') }
+        userId: { [Op.eq]: req.header('x-user-id') }
       },
       attributes: [
-        'adminId',
-        'adminName',
-        'adminEmail',
-        'adminRole',
+        'userId',
+        'userName',
+        'userEmail',
+        'userRole',
+        'userPhoneNumber',
         'createdAt',
         'updatedAt'
       ]

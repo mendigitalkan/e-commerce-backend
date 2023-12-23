@@ -43,7 +43,8 @@ export const userLogin = async (req: any, res: Response): Promise<any> => {
     }
 
     const token = generateAccessToken({
-      userId: user.userId
+      userId: user.userId,
+      userRole: user.userRole
     })
 
     const response = ResponseData.default
