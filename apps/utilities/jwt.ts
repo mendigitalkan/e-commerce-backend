@@ -3,6 +3,7 @@ import { CONFIG } from '../configs'
 
 export interface JwtPayloadTypes {
   userId: string
+  userRole: 'user' | 'admin' | 'superAdmin'
 }
 
 export const generateAccessToken = (userId: JwtPayloadTypes): any => {

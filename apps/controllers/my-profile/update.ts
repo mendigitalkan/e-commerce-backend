@@ -2,12 +2,12 @@ import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { Op } from 'sequelize'
-import { type AdminAttributes, AdminModel } from '../../models/admin'
 import { requestChecker } from '../../utilities/requestCheker'
 import { CONFIG } from '../../configs'
+import { UserModel, type UserAttributes } from '../../models/user'
 
 export const updateMyProfile = async (req: any, res: Response): Promise<any> => {
-  const requestBody = req.body as AdminAttributes
+  const requestBody = req.body as UserAttributes
   const emptyField = requestChecker({
     requireList: ['x-user-id'],
     requestData: req.headers
@@ -20,33 +20,33 @@ export const updateMyProfile = async (req: any, res: Response): Promise<any> => 
   }
 
   try {
-    if ('adminPassword' in requestBody) {
+    if ('userPassword' in requestBody) {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      requestBody.adminPassword = require('crypto')
+      requestBody.userPassword = require('crypto')
         .createHash('sha1')
-        .update(requestBody.adminPassword + CONFIG.secret.passwordEncryption)
+        .update(requestBody.userPassword + CONFIG.secret.passwordEncryption)
         .digest('hex')
     }
 
-    const newData: AdminAttributes | any = {
-      ...(requestBody.adminName.length > 0 && {
-        adminName: requestBody.adminName
+    const newData: UserAttributes | any = {
+      ...(requestBody.userName.length > 0 && {
+        userName: requestBody.userName
       }),
-      ...(requestBody.adminEmail.length > 0 && {
-        adminEmail: requestBody.adminEmail
+      ...(requestBody.userEmail.length > 0 && {
+        userEmail: requestBody.userEmail
       }),
-      ...(requestBody.adminPassword.length > 0 && {
-        adminPassword: requestBody.adminPassword
+      ...(requestBody.userPassword.length > 0 && {
+        userPassword: requestBody.userPassword
       }),
-      ...(requestBody.adminRole.length > 0 && {
-        adminRole: requestBody.adminRole
+      ...(requestBody.userRole.length > 0 && {
+        userRole: requestBody.userRole
       })
     }
 
-    await AdminModel.update(newData, {
+    await UserModel.update(newData, {
       where: {
         deleted: { [Op.eq]: 0 },
-        adminId: { [Op.eq]: req.header('x-user-id') }
+        userId: { [Op.eq]: req.header('x-user-id') }
       }
     })
 
