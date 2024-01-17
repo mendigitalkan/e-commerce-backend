@@ -6,15 +6,10 @@ import { notificationController } from '../../controllers/notifications'
 
 export const notificationRoutes = (app: Express) => {
   const router = express.Router()
-  app.use(
-    '/api/v1/notifications',
-    middleware.useAuthorization,
-    middleware.useJwtAccess,
-    router
-  )
+  app.use('/api/v1/notifications', middleware.useAuthorization, router)
 
   router.get(
-    '/list',
+    '/',
     async (req: Request, res: Response) => await notificationController.findAll(req, res)
   )
   router.get(

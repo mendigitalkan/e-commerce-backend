@@ -7,14 +7,16 @@ import { middleware } from '../../middlewares'
 
 export const userRoutes = (app: Express): void => {
   const router = express.Router()
-  app.use('/api/v1/users', middleware.useAuthorization, router)
+  app.use('/api/v1/users', router)
 
   router.get(
-    '/list',
+    '/',
+    middleware.useAuthorization,
     async (req: Request, res: Response) => await UsersController.findAll(req, res)
   )
   router.get(
     '/detail/:userId',
+    middleware.useAuthorization,
     async (req: Request, res: Response) => await UsersController.findOne(req, res)
   )
   router.post(

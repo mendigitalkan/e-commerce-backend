@@ -9,6 +9,7 @@ export const useAuthorization = (
   res: Response,
   next: NextFunction
 ): any => {
+  console.log(req.headers.authorization)
   try {
     if (
       req.headers.authorization == null ||
@@ -28,6 +29,7 @@ export const useAuthorization = (
       return res.status(StatusCodes.UNAUTHORIZED).json(response)
     }
 
+    req.body.user = verify
     next()
   } catch (error: any) {
     const message = `unable to process request! error ${error.message}`

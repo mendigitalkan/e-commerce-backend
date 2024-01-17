@@ -8,12 +8,7 @@ import { updateMyProfile } from '../../controllers/my-profile/update'
 
 export const myProfileRouter = (app: Express) => {
   const router = express.Router()
-  app.use(
-    '/api/v1/my-profile',
-    middleware.useAuthorization,
-    middleware.useJwtAccess,
-    router
-  )
+  app.use('/api/v1/my-profile', middleware.useAuthorization, router)
   router.get('/', async (req: Request, res: Response) => await findMyProfile(req, res))
   router.patch(
     '/',

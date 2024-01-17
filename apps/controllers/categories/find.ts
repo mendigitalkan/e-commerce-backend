@@ -42,7 +42,7 @@ export const findDetailCategory = async (req: any, res: Response): Promise<any> 
   const requestParams = req.params as CategoriesAttributes
 
   const emptyField = requestChecker({
-    requireList: ['category'],
+    requireList: ['categoryId'],
     requestData: requestParams
   })
 

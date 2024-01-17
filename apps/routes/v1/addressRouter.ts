@@ -6,15 +6,10 @@ import { addressController } from '../../controllers/addresses'
 
 export const addressRoutes = (app: Express) => {
   const router = express.Router()
-  app.use(
-    '/api/v1/addresses',
-    middleware.useAuthorization,
-    middleware.useJwtAccess,
-    router
-  )
+  app.use('/api/v1/addresses', middleware.useAuthorization, router)
 
   router.get(
-    '/list',
+    '/',
     async (req: Request, res: Response) => await addressController.findAll(req, res)
   )
   router.get(

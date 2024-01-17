@@ -6,15 +6,10 @@ import { transactionController } from '../../controllers/transactions'
 
 export const transactionRoutes = (app: Express) => {
   const router = express.Router()
-  app.use(
-    '/api/v1/transactions',
-    middleware.useAuthorization,
-    middleware.useJwtAccess,
-    router
-  )
+  app.use('/api/v1/transactions', middleware.useAuthorization, router)
 
   router.get(
-    '/list',
+    '/',
     async (req: Request, res: Response) => await transactionController.findAll(req, res)
   )
   router.get(

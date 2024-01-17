@@ -6,19 +6,14 @@ import { categoriesController } from '../../controllers/categories'
 
 export const categoryRoutes = (app: Express) => {
   const router = express.Router()
-  app.use(
-    '/api/v1/categories',
-    middleware.useAuthorization,
-    middleware.useJwtAccess,
-    router
-  )
+  app.use('/api/v1/categories', middleware.useAuthorization, router)
 
   router.get(
-    '/list',
+    '/',
     async (req: Request, res: Response) => await categoriesController.findAll(req, res)
   )
   router.get(
-    '/detail/:orderId',
+    '/detail/:categoryId',
     async (req: Request, res: Response) => await categoriesController.findOne(req, res)
   )
   router.post(

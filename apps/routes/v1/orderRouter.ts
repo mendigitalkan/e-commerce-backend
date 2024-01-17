@@ -6,10 +6,10 @@ import { orderController } from '../../controllers/orders'
 
 export const orderRoutes = (app: Express) => {
   const router = express.Router()
-  app.use('/api/v1/orders', middleware.useAuthorization, middleware.useJwtAccess, router)
+  app.use('/api/v1/orders', middleware.useAuthorization, router)
 
   router.get(
-    '/list',
+    '/',
     async (req: Request, res: Response) => await orderController.findAll(req, res)
   )
   router.get(
