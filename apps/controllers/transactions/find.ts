@@ -5,19 +5,19 @@ import { Op } from 'sequelize'
 import { Pagination } from '../../utilities/pagination'
 import { requestChecker } from '../../utilities/requestCheker'
 import { CONSOLE } from '../../utilities/log'
-import { type ProductAttributes, ProductModel } from '../../models/products'
+import { type TransactionsAttributes, TransactionsModel } from '../../models/transactions'
 
-export const findAllProducts = async (req: any, res: Response): Promise<any> => {
+export const findAllTransaction = async (req: any, res: Response): Promise<any> => {
   try {
     const page = new Pagination(
       parseInt(req.query.page) ?? 0,
       parseInt(req.query.size) ?? 10
     )
-    const result = await ProductModel.findAndCountAll({
+    const result = await TransactionsModel.findAndCountAll({
       where: {
         deleted: { [Op.eq]: 0 },
         ...(Boolean(req.query.search) && {
-          [Op.or]: [{ productName: { [Op.like]: `%${req.query.search}%` } }]
+          [Op.or]: [{ transactionId: { [Op.like]: `%${req.query.search}%` } }]
         })
       },
       order: [['id', 'desc']],
@@ -38,11 +38,11 @@ export const findAllProducts = async (req: any, res: Response): Promise<any> => 
   }
 }
 
-export const findDetailProduct = async (req: any, res: Response): Promise<any> => {
-  const requestParams = req.params as ProductAttributes
+export const findDetailTransaction = async (req: any, res: Response): Promise<any> => {
+  const requestParams = req.params as TransactionsAttributes
 
   const emptyField = requestChecker({
-    requireList: ['productId'],
+    requireList: ['transactionId'],
     requestData: requestParams
   })
 
@@ -53,10 +53,10 @@ export const findDetailProduct = async (req: any, res: Response): Promise<any> =
   }
 
   try {
-    const result = await ProductModel.findOne({
+    const result = await TransactionsModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },
-        productId: { [Op.eq]: requestParams.productId }
+        transactionId: { [Op.eq]: requestParams.transactionId }
       }
     })
 

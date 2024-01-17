@@ -5,19 +5,19 @@ import { Op } from 'sequelize'
 import { Pagination } from '../../utilities/pagination'
 import { requestChecker } from '../../utilities/requestCheker'
 import { CONSOLE } from '../../utilities/log'
-import { type ProductAttributes, ProductModel } from '../../models/products'
+import { type CartsAttributes, CartsModel } from '../../models/carts'
 
-export const findAllProducts = async (req: any, res: Response): Promise<any> => {
+export const findAllCart = async (req: any, res: Response): Promise<any> => {
   try {
     const page = new Pagination(
       parseInt(req.query.page) ?? 0,
       parseInt(req.query.size) ?? 10
     )
-    const result = await ProductModel.findAndCountAll({
+    const result = await CartsModel.findAndCountAll({
       where: {
         deleted: { [Op.eq]: 0 },
         ...(Boolean(req.query.search) && {
-          [Op.or]: [{ productName: { [Op.like]: `%${req.query.search}%` } }]
+          [Op.or]: [{ cartProductId: { [Op.like]: `%${req.query.search}%` } }]
         })
       },
       order: [['id', 'desc']],
@@ -38,11 +38,11 @@ export const findAllProducts = async (req: any, res: Response): Promise<any> => 
   }
 }
 
-export const findDetailProduct = async (req: any, res: Response): Promise<any> => {
-  const requestParams = req.params as ProductAttributes
+export const findDetailCart = async (req: any, res: Response): Promise<any> => {
+  const requestParams = req.params as CartsAttributes
 
   const emptyField = requestChecker({
-    requireList: ['productId'],
+    requireList: ['cartId'],
     requestData: requestParams
   })
 
@@ -53,10 +53,10 @@ export const findDetailProduct = async (req: any, res: Response): Promise<any> =
   }
 
   try {
-    const result = await ProductModel.findOne({
+    const result = await CartsModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },
-        productId: { [Op.eq]: requestParams.productId }
+        cartId: { [Op.eq]: requestParams.cartId }
       }
     })
 

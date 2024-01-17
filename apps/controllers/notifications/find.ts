@@ -5,19 +5,22 @@ import { Op } from 'sequelize'
 import { Pagination } from '../../utilities/pagination'
 import { requestChecker } from '../../utilities/requestCheker'
 import { CONSOLE } from '../../utilities/log'
-import { type ProductAttributes, ProductModel } from '../../models/products'
+import {
+  type NotificationAttributes,
+  NotificationModel
+} from '../../models/notifications'
 
-export const findAllProducts = async (req: any, res: Response): Promise<any> => {
+export const findAllNotification = async (req: any, res: Response): Promise<any> => {
   try {
     const page = new Pagination(
       parseInt(req.query.page) ?? 0,
       parseInt(req.query.size) ?? 10
     )
-    const result = await ProductModel.findAndCountAll({
+    const result = await NotificationModel.findAndCountAll({
       where: {
         deleted: { [Op.eq]: 0 },
         ...(Boolean(req.query.search) && {
-          [Op.or]: [{ productName: { [Op.like]: `%${req.query.search}%` } }]
+          [Op.or]: [{ notificationName: { [Op.like]: `%${req.query.search}%` } }]
         })
       },
       order: [['id', 'desc']],
@@ -38,11 +41,11 @@ export const findAllProducts = async (req: any, res: Response): Promise<any> => 
   }
 }
 
-export const findDetailProduct = async (req: any, res: Response): Promise<any> => {
-  const requestParams = req.params as ProductAttributes
+export const findDetailNotification = async (req: any, res: Response): Promise<any> => {
+  const requestParams = req.params as NotificationAttributes
 
   const emptyField = requestChecker({
-    requireList: ['productId'],
+    requireList: ['notificationId'],
     requestData: requestParams
   })
 
@@ -53,10 +56,10 @@ export const findDetailProduct = async (req: any, res: Response): Promise<any> =
   }
 
   try {
-    const result = await ProductModel.findOne({
+    const result = await NotificationModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },
-        productId: { [Op.eq]: requestParams.productId }
+        notificationId: { [Op.eq]: requestParams.notificationId }
       }
     })
 

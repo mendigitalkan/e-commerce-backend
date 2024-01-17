@@ -3,21 +3,17 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { requestChecker } from '../../utilities/requestCheker'
 import { v4 as uuidv4 } from 'uuid'
-import { ProductModel, type ProductAttributes } from '../../models/products'
+import { TransactionsModel, type TransactionsAttributes } from '../../models/transactions'
 
-export const createProduct = async (req: any, res: Response): Promise<any> => {
-  const requestBody = req.body as ProductAttributes
+export const createTransaction = async (req: any, res: Response): Promise<any> => {
+  const requestBody = req.body as TransactionsAttributes
 
   const emptyField = requestChecker({
     requireList: [
-      'productName',
-      'productDescription',
-      'productImages',
-      'productPrice',
-      'productCategoryId',
-      'productTotalSale',
-      'productStock',
-      'productVariant'
+      'transactionPrice',
+      'transactionOrderId',
+      'transactionUserId',
+      'transactionOngkirPrice'
     ],
     requestData: requestBody
   })
@@ -29,8 +25,8 @@ export const createProduct = async (req: any, res: Response): Promise<any> => {
   }
 
   try {
-    requestBody.productId = uuidv4()
-    await ProductModel.create(requestBody)
+    requestBody.transactionId = uuidv4()
+    await TransactionsModel.create(requestBody)
 
     const response = ResponseData.default
     const result = { message: 'success' }

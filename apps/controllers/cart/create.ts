@@ -3,22 +3,13 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { requestChecker } from '../../utilities/requestCheker'
 import { v4 as uuidv4 } from 'uuid'
-import { ProductModel, type ProductAttributes } from '../../models/products'
+import { CartsModel, type CartsAttributes } from '../../models/carts'
 
-export const createProduct = async (req: any, res: Response): Promise<any> => {
-  const requestBody = req.body as ProductAttributes
+export const createCart = async (req: any, res: Response): Promise<any> => {
+  const requestBody = req.body as CartsAttributes
 
   const emptyField = requestChecker({
-    requireList: [
-      'productName',
-      'productDescription',
-      'productImages',
-      'productPrice',
-      'productCategoryId',
-      'productTotalSale',
-      'productStock',
-      'productVariant'
-    ],
+    requireList: ['cartUserId', 'cartProductId'],
     requestData: requestBody
   })
 
@@ -29,8 +20,8 @@ export const createProduct = async (req: any, res: Response): Promise<any> => {
   }
 
   try {
-    requestBody.productId = uuidv4()
-    await ProductModel.create(requestBody)
+    requestBody.cartId = uuidv4()
+    await CartsModel.create(requestBody)
 
     const response = ResponseData.default
     const result = { message: 'success' }
