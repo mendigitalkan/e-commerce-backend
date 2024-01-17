@@ -7,41 +7,24 @@ const { ZygoteModel } = require('../zygote')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('notifications', {
       ...ZygoteModel,
-      user_id: {
+      notification_id: {
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4
       },
-      user_name: {
-        type: Sequelize.STRING(80),
-        allowNull: false
-      },
-      user_email: {
-        type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      user_password: {
+      notification_name: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      user_phone_number: {
+      notification_message: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      user_photo: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      user_role: {
-        type: Sequelize.ENUM('user', 'admin', 'superAdmin'),
-        allowNull: false,
-        defaultValue: 'user'
       }
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users')
+    await queryInterface.dropTable('notifications')
   }
 }

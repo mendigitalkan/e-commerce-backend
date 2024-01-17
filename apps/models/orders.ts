@@ -2,80 +2,74 @@
 import { DataTypes, type Model, type Optional, UUIDV4 } from 'sequelize'
 import { sequelize } from '.'
 import { type ZygoteAttributes, ZygoteModel } from './zygote'
-import { CategoriesModel } from './categories'
 
-export interface ProductAttributes extends ZygoteAttributes {
-  productId: string
-  productName: string
-  productDescription: string
-  productImages: string
-  productPrice: number
-  productCategoryId: string
-  productTotalSale: number
-  productStock: number
-  productVariant: string
+export interface OrdersAttributes extends ZygoteAttributes {
+  orderId: string
+  orderUserId: string
+  orderProductId: string
+  orderProductName: string
+  orderProductPrice: number
+  orderProductPhotos: string
+  orderProductDescription: string
+  orderStatus: 'waiting' | 'process' | 'delivery' | 'done' | 'cancel'
 }
 
 // we're telling the Model that 'id' is optional
 // when creating an instance of the model (such as using Model.create()).
-type ProductCreationAttributes = Optional<
-  ProductAttributes,
+type OrdersCreationAttributes = Optional<
+  OrdersAttributes,
   'id' | 'createdAt' | 'updatedAt'
 >
 
 // We need to declare an interface for our model that is basically what our class would be
 
-interface ProductInstance
-  extends Model<ProductAttributes, ProductCreationAttributes>,
-    ProductAttributes {}
+interface OrdersInstance
+  extends Model<OrdersAttributes, OrdersCreationAttributes>,
+    OrdersAttributes {}
 
-export const ProductModel = sequelize.define<ProductInstance>(
-  'products',
+export const OrdersModel = sequelize.define<OrdersInstance>(
+  'orders',
   {
     ...ZygoteModel,
-    productId: {
+    orderId: {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: UUIDV4()
     },
-    productName: {
+    orderUserId: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    productImages: {
+    orderProductId: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    productDescription: {
+    orderProductName: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    productPrice: {
+    orderProductPrice: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    productCategoryId: {
+    orderProductPhotos: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    productTotalSale: {
-      type: DataTypes.INTEGER,
+    orderProductDescription: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    productStock: {
-      type: DataTypes.INTEGER,
+    orderStatus: {
+      type: DataTypes.ENUM('waiting', 'process', 'delivery', 'done', 'cancel'),
       allowNull: false,
-      defaultValue: 0
-    },
-    productVariant: {
-      type: DataTypes.JSON,
-      allowNull: false
+      defaultValue: 'waiting'
     }
   },
   {
     ...sequelize,
     timestamps: false,
-    tableName: 'products',
+    tableName: 'orders',
     deletedAt: false,
     paranoid: true,
     underscored: true,
@@ -83,8 +77,3 @@ export const ProductModel = sequelize.define<ProductInstance>(
     engine: 'InnoDB'
   }
 )
-
-ProductModel.hasOne(CategoriesModel, {
-  sourceKey: 'productCategoryId',
-  foreignKey: 'categoryId'
-})

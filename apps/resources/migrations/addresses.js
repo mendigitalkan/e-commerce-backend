@@ -7,41 +7,44 @@ const { ZygoteModel } = require('../zygote')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('addresses', {
       ...ZygoteModel,
-      user_id: {
+      address_id: {
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4
       },
-      user_name: {
-        type: Sequelize.STRING(80),
-        allowNull: false
-      },
-      user_email: {
-        type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      user_password: {
+      address_user_id: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      user_phone_number: {
+      address_name: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      user_photo: {
+      address_detail: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      user_role: {
-        type: Sequelize.ENUM('user', 'admin', 'superAdmin'),
-        allowNull: false,
-        defaultValue: 'user'
+      address_postal_code: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      address_provinsi: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      address_kabupaten: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      address_kecamatan: {
+        type: Sequelize.STRING,
+        allowNull: false
       }
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users')
+    await queryInterface.dropTable('addresses')
   }
 }

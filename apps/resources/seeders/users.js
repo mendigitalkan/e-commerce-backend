@@ -11,6 +11,7 @@ module.exports = {
         user_email: 'user@mail.com',
         user_password: 'cf7c906bfbb48e72288fc016bac0e6ed58b0dc2a',
         user_phone_number: '082122335544',
+        user_photo: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
         user_role: 'user'
       },
       {
@@ -19,6 +20,7 @@ module.exports = {
         user_email: 'admin@mail.com',
         user_password: 'cf7c906bfbb48e72288fc016bac0e6ed58b0dc2a',
         user_phone_number: '082122335544',
+        user_photo: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
         user_role: 'admin'
       },
       {
@@ -27,6 +29,7 @@ module.exports = {
         user_email: 'superadmin@mail.com',
         user_password: 'cf7c906bfbb48e72288fc016bac0e6ed58b0dc2a',
         user_phone_number: '082122335544',
+        user_photo: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
         user_role: 'superAdmin'
       }
     ])

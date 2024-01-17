@@ -9,6 +9,7 @@ export interface UserAttributes extends ZygoteAttributes {
   userEmail: string
   userPassword: string
   userPhoneNumber: string
+  userPhoto: string
   userRole: 'user' | 'admin' | 'superAdmin'
 }
 
@@ -42,6 +43,10 @@ export const UserModel = sequelize.define<UserInstance>(
       allowNull: false
     },
     userPhoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    userPhoto: {
       type: DataTypes.STRING,
       allowNull: false
     },

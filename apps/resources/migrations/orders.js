@@ -7,41 +7,45 @@ const { ZygoteModel } = require('../zygote')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('orders', {
       ...ZygoteModel,
-      user_id: {
+      order_id: {
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4
       },
-      user_name: {
-        type: Sequelize.STRING(80),
-        allowNull: false
-      },
-      user_email: {
-        type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      user_password: {
+      order_user_id: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      user_phone_number: {
+      order_product_id: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      user_photo: {
+      order_product_name: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      user_role: {
-        type: Sequelize.ENUM('user', 'admin', 'superAdmin'),
+      order_product_price: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      order_product_description: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      order_product_images: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      order_status: {
+        type: Sequelize.ENUM('waiting', 'process', 'delivery', 'done', 'cancel'),
         allowNull: false,
-        defaultValue: 'user'
+        defaultValue: 'waiting'
       }
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users')
+    await queryInterface.dropTable('orders')
   }
 }
