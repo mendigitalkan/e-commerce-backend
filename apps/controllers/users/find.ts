@@ -23,6 +23,7 @@ export const findAllUser = async (req: any, res: Response): Promise<any> => {
         })
       },
       attributes: [
+        'id',
         'userId',
         'userName',
         'userEmail',

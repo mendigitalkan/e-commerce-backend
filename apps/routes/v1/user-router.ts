@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 import express, { type Express, type Request, type Response } from 'express'
-import { UsersController } from '../../controllers/auth'
+import { UsersController } from '../../controllers/users'
 import { middleware } from '../../middlewares'
 
 export const userRoutes = (app: Express): void => {

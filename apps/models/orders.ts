@@ -9,7 +9,7 @@ export interface OrdersAttributes extends ZygoteAttributes {
   orderProductId: string
   orderProductName: string
   orderProductPrice: number
-  orderProductPhotos: string
+  orderProductImages: string
   orderProductDescription: string
   orderStatus: 'waiting' | 'process' | 'delivery' | 'done' | 'cancel'
 }
@@ -52,7 +52,7 @@ export const OrdersModel = sequelize.define<OrdersInstance>(
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    orderProductPhotos: {
+    orderProductImages: {
       type: DataTypes.STRING,
       allowNull: false
     },

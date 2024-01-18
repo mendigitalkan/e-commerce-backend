@@ -9,7 +9,6 @@ export const useAuthorization = (
   res: Response,
   next: NextFunction
 ): any => {
-  console.log(req.headers.authorization)
   try {
     if (
       req.headers.authorization == null ||
