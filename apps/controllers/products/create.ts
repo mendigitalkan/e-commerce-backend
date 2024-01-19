@@ -15,7 +15,6 @@ export const createProduct = async (req: any, res: Response): Promise<any> => {
       'productImages',
       'productPrice',
       'productCategoryId',
-      'productTotalSale',
       'productStock',
       'productVariant'
     ],

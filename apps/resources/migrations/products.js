@@ -37,7 +37,8 @@ module.exports = {
       },
       product_total_sale: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true,
+        defaultValue: 0
       },
       product_stock: {
         type: Sequelize.INTEGER,
