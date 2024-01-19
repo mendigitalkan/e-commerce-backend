@@ -6,6 +6,8 @@ import { Pagination } from '../../utilities/pagination'
 import { requestChecker } from '../../utilities/requestCheker'
 import { CONSOLE } from '../../utilities/log'
 import { type TransactionsAttributes, TransactionsModel } from '../../models/transactions'
+import { UserModel } from '../../models/user'
+import { OrdersModel } from '../../models/orders'
 
 export const findAllTransaction = async (req: any, res: Response): Promise<any> => {
   try {
@@ -20,6 +22,13 @@ export const findAllTransaction = async (req: any, res: Response): Promise<any> 
           [Op.or]: [{ transactionId: { [Op.like]: `%${req.query.search}%` } }]
         })
       },
+      include: [
+        {
+          model: UserModel,
+          attributes: ['userId', 'userName', 'userEmail', 'userPhoto']
+        },
+        { model: OrdersModel }
+      ],
       order: [['id', 'desc']],
       ...(req.query.pagination === 'true' && {
         limit: page.limit,
@@ -57,7 +66,14 @@ export const findDetailTransaction = async (req: any, res: Response): Promise<an
       where: {
         deleted: { [Op.eq]: 0 },
         transactionId: { [Op.eq]: requestParams.transactionId }
-      }
+      },
+      include: [
+        {
+          model: UserModel,
+          attributes: ['userId', 'userName', 'userEmail', 'userPhoto']
+        },
+        { model: OrdersModel }
+      ]
     })
 
     if (result == null) {

@@ -2,6 +2,8 @@
 import { DataTypes, type Model, type Optional, UUIDV4 } from 'sequelize'
 import { sequelize } from '.'
 import { type ZygoteAttributes, ZygoteModel } from './zygote'
+import { OrdersModel } from './orders'
+import { UserModel } from './user'
 
 export interface TransactionsAttributes extends ZygoteAttributes {
   transactionId: string
@@ -61,3 +63,13 @@ export const TransactionsModel = sequelize.define<TransactionsInstance>(
     engine: 'InnoDB'
   }
 )
+
+TransactionsModel.hasOne(OrdersModel, {
+  sourceKey: 'transactionOrderId',
+  foreignKey: 'orderId'
+})
+
+TransactionsModel.hasOne(UserModel, {
+  sourceKey: 'transactionUserId',
+  foreignKey: 'userId'
+})

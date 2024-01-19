@@ -13,7 +13,7 @@ export const transactionRoutes = (app: Express) => {
     async (req: Request, res: Response) => await transactionController.findAll(req, res)
   )
   router.get(
-    '/detail/:orderId',
+    '/detail/:transactionId',
     async (req: Request, res: Response) => await transactionController.findOne(req, res)
   )
   router.post(
