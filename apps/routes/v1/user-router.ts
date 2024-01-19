@@ -37,4 +37,12 @@ export const userRoutes = (app: Express): void => {
     '/register',
     async (req: Request, res: Response) => await UsersController.register(req, res)
   )
+  router.patch(
+    '/',
+    async (req: Request, res: Response) => await UsersController.update(req, res)
+  )
+  router.delete(
+    '/',
+    async (req: Request, res: Response) => await UsersController.remove(req, res)
+  )
 }

@@ -74,6 +74,7 @@ export const findDetailUser = async (req: any, res: Response): Promise<any> => {
         'userName',
         'userEmail',
         'userPhoneNumber',
+        'userRole',
         'createdAt',
         'updatedAt'
       ]
@@ -165,6 +166,7 @@ export const findDetailAdmin = async (req: any, res: Response): Promise<any> => 
         'userEmail',
         'userPhoneNumber',
         'createdAt',
+        'userRole',
         'updatedAt'
       ]
     })

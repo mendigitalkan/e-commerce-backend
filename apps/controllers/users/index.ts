@@ -1,6 +1,8 @@
 import { findAllAdmin, findAllUser, findDetailAdmin, findDetailUser } from './find'
 import { userLogin } from './login'
 import { userRegister } from './register'
+import { removeUser } from './remove'
+import { updateUser } from './update'
 
 export const UsersController = {
   login: userLogin,
@@ -8,5 +10,7 @@ export const UsersController = {
   findAll: findAllUser,
   findAdmins: findAllAdmin,
   findDetailUser,
-  findDetailAdmin
+  findDetailAdmin,
+  update: updateUser,
+  remove: removeUser
 }
