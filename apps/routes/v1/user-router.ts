@@ -17,7 +17,17 @@ export const userRoutes = (app: Express): void => {
   router.get(
     '/detail/:userId',
     middleware.useAuthorization,
-    async (req: Request, res: Response) => await UsersController.findOne(req, res)
+    async (req: Request, res: Response) => await UsersController.findDetailUser(req, res)
+  )
+  router.get(
+    '/admins',
+    middleware.useAuthorization,
+    async (req: Request, res: Response) => await UsersController.findAdmins(req, res)
+  )
+  router.get(
+    '/admins/detail/:userId',
+    middleware.useAuthorization,
+    async (req: Request, res: Response) => await UsersController.findDetailAdmin(req, res)
   )
   router.post(
     '/login',

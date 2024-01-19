@@ -1,4 +1,4 @@
-import { findAllUser, findOneUser } from './find'
+import { findAllAdmin, findAllUser, findDetailAdmin, findDetailUser } from './find'
 import { userLogin } from './login'
 import { userRegister } from './register'
 
@@ -6,5 +6,7 @@ export const UsersController = {
   login: userLogin,
   register: userRegister,
   findAll: findAllUser,
-  findOne: findOneUser
+  findAdmins: findAllAdmin,
+  findDetailUser,
+  findDetailAdmin
 }
