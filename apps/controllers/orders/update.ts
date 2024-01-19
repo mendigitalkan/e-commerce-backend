@@ -34,8 +34,26 @@ export const updateOrder = async (req: any, res: Response): Promise<any> => {
     }
 
     const newData: OrdersAttributes | any = {
-      ...(requestBody.orderProductName.length > 0 && {
-        orderProductName: requestBody.orderProductName
+      ...(requestBody?.orderId?.length > 0 && {
+        orderId: requestBody?.orderId
+      }),
+      ...(requestBody?.orderProductId?.length > 0 && {
+        orderProductId: requestBody?.orderProductId
+      }),
+      ...(requestBody?.orderProductName?.length > 0 && {
+        orderProductName: requestBody?.orderProductName
+      }),
+      ...(requestBody?.orderProductPrice?.toString().length > 0 && {
+        orderProductPrice: requestBody?.orderProductPrice
+      }),
+      ...(requestBody?.orderProductImages?.length > 0 && {
+        orderProductImages: requestBody?.orderProductImages
+      }),
+      ...(requestBody?.orderProductDescription?.length > 0 && {
+        orderProductDescription: requestBody?.orderProductDescription
+      }),
+      ...(requestBody?.orderStatus?.length > 0 && {
+        orderStatus: requestBody?.orderStatus
       })
     }
 
