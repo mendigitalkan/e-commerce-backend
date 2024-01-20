@@ -48,7 +48,7 @@ export const UserModel = sequelize.define<UserInstance>(
     },
     userPhoto: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     userRole: {
       type: DataTypes.ENUM('user', 'admin', 'superAdmin'),

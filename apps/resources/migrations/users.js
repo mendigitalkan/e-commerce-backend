@@ -32,7 +32,7 @@ module.exports = {
       },
       user_photo: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       user_role: {
         type: Sequelize.ENUM('user', 'admin', 'superAdmin'),
