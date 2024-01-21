@@ -2,6 +2,7 @@
 import { DataTypes, type Model, type Optional, UUIDV4 } from 'sequelize'
 import { sequelize } from '.'
 import { type ZygoteAttributes, ZygoteModel } from './zygote'
+import { ProductModel } from './products'
 
 export interface CartsAttributes extends ZygoteAttributes {
   cartId: string
@@ -48,3 +49,8 @@ export const CartsModel = sequelize.define<CartsInstance>(
     engine: 'InnoDB'
   }
 )
+
+CartsModel.hasOne(ProductModel, {
+  sourceKey: 'cartProductId',
+  foreignKey: 'productId'
+})

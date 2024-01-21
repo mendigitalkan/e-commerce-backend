@@ -6,6 +6,7 @@ import { Pagination } from '../../utilities/pagination'
 import { requestChecker } from '../../utilities/requestCheker'
 import { CONSOLE } from '../../utilities/log'
 import { type CartsAttributes, CartsModel } from '../../models/carts'
+import { ProductModel } from '../../models/products'
 
 export const findAllCart = async (req: any, res: Response): Promise<any> => {
   try {
@@ -16,10 +17,16 @@ export const findAllCart = async (req: any, res: Response): Promise<any> => {
     const result = await CartsModel.findAndCountAll({
       where: {
         deleted: { [Op.eq]: 0 },
+        cartUserId: { [Op.eq]: req.body?.user?.userId },
         ...(Boolean(req.query.search) && {
           [Op.or]: [{ cartProductId: { [Op.like]: `%${req.query.search}%` } }]
         })
       },
+      include: [
+        {
+          model: ProductModel
+        }
+      ],
       order: [['id', 'desc']],
       ...(req.query.pagination === 'true' && {
         limit: page.limit,
@@ -56,8 +63,14 @@ export const findDetailCart = async (req: any, res: Response): Promise<any> => {
     const result = await CartsModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },
+        cartUserId: { [Op.eq]: req.body?.user?.userId },
         cartId: { [Op.eq]: requestParams.cartId }
-      }
+      },
+      include: [
+        {
+          model: ProductModel
+        }
+      ]
     })
 
     if (result == null) {

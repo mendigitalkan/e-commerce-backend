@@ -9,7 +9,7 @@ export const createCart = async (req: any, res: Response): Promise<any> => {
   const requestBody = req.body as CartsAttributes
 
   const emptyField = requestChecker({
-    requireList: ['cartUserId', 'cartProductId'],
+    requireList: ['cartProductId'],
     requestData: requestBody
   })
 
@@ -21,6 +21,7 @@ export const createCart = async (req: any, res: Response): Promise<any> => {
 
   try {
     requestBody.cartId = uuidv4()
+    requestBody.cartUserId = req.body?.user?.userId
     await CartsModel.create(requestBody)
 
     const response = ResponseData.default
