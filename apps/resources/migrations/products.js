@@ -45,6 +45,16 @@ module.exports = {
         allowNull: false,
         defaultValue: 0
       },
+      product_weight: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
+      product_discount: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
       product_variant: {
         type: Sequelize.STRING,
         allowNull: false

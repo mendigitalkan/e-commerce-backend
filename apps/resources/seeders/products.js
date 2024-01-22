@@ -15,6 +15,7 @@ module.exports = {
         product_category_id: 'ret3453454werd',
         product_total_sale: 20,
         product_stock: 50,
+        product_discount: 10,
         product_variant: '{size: [xl, l, m], color: ["black", "red", "white"]}'
       },
       {
