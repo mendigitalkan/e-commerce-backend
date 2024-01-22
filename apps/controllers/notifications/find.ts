@@ -2,55 +2,50 @@ import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { Op } from 'sequelize'
-import { requestChecker } from '../../utilities/requestCheker'
-import { type UserAttributes, UserModel } from '../../models/user'
 import { Pagination } from '../../utilities/pagination'
+import { requestChecker } from '../../utilities/requestCheker'
+import { CONSOLE } from '../../utilities/log'
+import {
+  type NotificationAttributes,
+  NotificationModel
+} from '../../models/notifications'
 
-export const findAllUser = async (req: any, res: Response): Promise<any> => {
+export const findAllNotification = async (req: any, res: Response): Promise<any> => {
   try {
     const page = new Pagination(
       parseInt(req.query.page) ?? 0,
       parseInt(req.query.size) ?? 10
     )
-    const users = await UserModel.findAndCountAll({
+    const result = await NotificationModel.findAndCountAll({
       where: {
         deleted: { [Op.eq]: 0 },
         ...(Boolean(req.query.search) && {
-          [Op.or]: [
-            { userName: { [Op.like]: `%${req.query.search}%` } },
-            { userEmail: { [Op.like]: `%${req.query.search}%` } }
-          ]
+          [Op.or]: [{ notificationName: { [Op.like]: `%${req.query.search}%` } }]
         })
       },
-      attributes: [
-        'userId',
-        'userName',
-        'userEmail',
-        'userPhoneNumber',
-        'createdAt',
-        'updatedAt'
-      ],
       order: [['id', 'desc']],
       ...(req.query.pagination === 'true' && {
         limit: page.limit,
         offset: page.offset
       })
     })
+
     const response = ResponseData.default
-    response.data = page.data(users)
+    response.data = page.data(result)
     return res.status(StatusCodes.OK).json(response)
   } catch (error: any) {
-    console.log(error.message)
+    CONSOLE.error(error.message)
     const message = `unable to process request! error ${error.message}`
     const response = ResponseData.error(message)
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response)
   }
 }
 
-export const findOneUser = async (req: any, res: Response): Promise<any> => {
-  const requestParams = req.params as UserAttributes
+export const findDetailNotification = async (req: any, res: Response): Promise<any> => {
+  const requestParams = req.params as NotificationAttributes
+
   const emptyField = requestChecker({
-    requireList: ['userId'],
+    requireList: ['notificationId'],
     requestData: requestParams
   })
 
@@ -61,29 +56,21 @@ export const findOneUser = async (req: any, res: Response): Promise<any> => {
   }
 
   try {
-    const user = await UserModel.findOne({
+    const result = await NotificationModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },
-        userId: { [Op.eq]: requestParams.userId }
-      },
-      attributes: [
-        'userId',
-        'userName',
-        'userEmail',
-        'userPhoneNumber',
-        'createdAt',
-        'updatedAt'
-      ]
+        notificationId: { [Op.eq]: requestParams.notificationId }
+      }
     })
 
-    if (user == null) {
-      const message = 'user not found!'
+    if (result == null) {
+      const message = 'not found!'
       const response = ResponseData.error(message)
-      return res.status(StatusCodes.FORBIDDEN).json(response)
+      return res.status(StatusCodes.NOT_FOUND).json(response)
     }
 
     const response = ResponseData.default
-    response.data = user
+    response.data = result
     return res.status(StatusCodes.OK).json(response)
   } catch (error: any) {
     const message = `unable to process request! error ${error.message}`

@@ -2,6 +2,7 @@
 import { DataTypes, type Model, type Optional, UUIDV4 } from 'sequelize'
 import { sequelize } from '.'
 import { type ZygoteAttributes, ZygoteModel } from './zygote'
+import { CategoriesModel } from './categories'
 
 export interface ProductAttributes extends ZygoteAttributes {
   productId: string
@@ -9,6 +10,10 @@ export interface ProductAttributes extends ZygoteAttributes {
   productDescription: string
   productImages: string
   productPrice: number
+  productCategoryId: string
+  productTotalSale: number
+  productStock: number
+  productVariant: string
 }
 
 // we're telling the Model that 'id' is optional
@@ -48,6 +53,24 @@ export const ProductModel = sequelize.define<ProductInstance>(
     productPrice: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    productCategoryId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    productTotalSale: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    productStock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    productVariant: {
+      type: DataTypes.JSON,
+      allowNull: false
     }
   },
   {
@@ -61,3 +84,8 @@ export const ProductModel = sequelize.define<ProductInstance>(
     engine: 'InnoDB'
   }
 )
+
+ProductModel.hasOne(CategoriesModel, {
+  sourceKey: 'productCategoryId',
+  foreignKey: 'categoryId'
+})

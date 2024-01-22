@@ -6,15 +6,10 @@ import { middleware } from '../../middlewares'
 
 export const productRoutes = (app: Express) => {
   const router = express.Router()
-  app.use(
-    '/api/v1/products',
-    middleware.useAuthorization,
-    middleware.useJwtAccess,
-    router
-  )
+  app.use('/api/v1/products', middleware.useAuthorization, router)
 
   router.get(
-    '/list',
+    '/',
     async (req: Request, res: Response) => await ProductController.findAll(req, res)
   )
   router.get(

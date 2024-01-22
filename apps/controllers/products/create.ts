@@ -9,7 +9,15 @@ export const createProduct = async (req: any, res: Response): Promise<any> => {
   const requestBody = req.body as ProductAttributes
 
   const emptyField = requestChecker({
-    requireList: ['productName', 'productDescription', 'productImages', 'productPrice'],
+    requireList: [
+      'productName',
+      'productDescription',
+      'productImages',
+      'productPrice',
+      'productCategoryId',
+      'productStock',
+      'productVariant'
+    ],
     requestData: requestBody
   })
 

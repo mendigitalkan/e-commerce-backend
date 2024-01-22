@@ -23,7 +23,7 @@ app.use(function (req, res, next) {
 
 app.use('/public', express.static('public'))
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-app.use(middleware.ipBlackList, middleware.useAuthorization)
+// app.use(middleware.ipBlackList)
 // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
 app.routes = appRouterV1(app)
 app.listen(CONFIG.port, () => {

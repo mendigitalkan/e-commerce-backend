@@ -10,8 +10,9 @@ module.exports = {
     await queryInterface.createTable('users', {
       ...ZygoteModel,
       user_id: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.UUID,
+        allowNull: false,
+        defaultValue: Sequelize.UUIDV4
       },
       user_name: {
         type: Sequelize.STRING(80),
@@ -28,6 +29,10 @@ module.exports = {
       user_phone_number: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      user_photo: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       user_role: {
         type: Sequelize.ENUM('user', 'admin', 'superAdmin'),

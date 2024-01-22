@@ -16,10 +16,6 @@ export const CONFIG = {
     pinEncryption: process.env.SECRET_PIN_ENCRYPTION,
     token: process.env.TOKEN_SECRET
   },
-  authorization: {
-    username: process.env.AUTHORIZATION_USERNAME,
-    passsword: process.env.AUTHORIZATION_PASSWORD
-  },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {
     development: {

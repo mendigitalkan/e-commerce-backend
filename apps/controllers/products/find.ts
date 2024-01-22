@@ -38,7 +38,7 @@ export const findAllProducts = async (req: any, res: Response): Promise<any> => 
   }
 }
 
-export const findOneProduct = async (req: any, res: Response): Promise<any> => {
+export const findDetailProduct = async (req: any, res: Response): Promise<any> => {
   const requestParams = req.params as ProductAttributes
 
   const emptyField = requestChecker({

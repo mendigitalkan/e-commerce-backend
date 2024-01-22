@@ -18,16 +18,35 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      product_description: {
-        type: Sequelize.STRING,
+      product_images: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
-      product_images: {
+      product_description: {
         type: Sequelize.STRING,
         allowNull: false
       },
       product_price: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      product_category_id: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      product_total_sale: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
+      product_stock: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      product_variant: {
+        type: Sequelize.STRING,
         allowNull: false
       }
     })

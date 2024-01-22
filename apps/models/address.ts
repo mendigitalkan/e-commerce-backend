@@ -5,7 +5,13 @@ import { type ZygoteAttributes, ZygoteModel } from './zygote'
 
 export interface AddressesAttributes extends ZygoteAttributes {
   addressId: string
-  adressName: string
+  addressUserId: string
+  addressName: string
+  addressDetail: string
+  addressPostalCode: string
+  addressProvinsi: string
+  addressKabupaten: string
+  addressKecamatan: string
 }
 
 // we're telling the Model that 'id' is optional
@@ -30,7 +36,31 @@ export const AddressesModel = sequelize.define<AddressesInstance>(
       allowNull: false,
       defaultValue: UUIDV4()
     },
-    adressName: {
+    addressUserId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    addressName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    addressDetail: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    addressPostalCode: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    addressProvinsi: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    addressKabupaten: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    addressKecamatan: {
       type: DataTypes.STRING,
       allowNull: false
     }
