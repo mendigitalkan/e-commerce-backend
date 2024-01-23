@@ -10,10 +10,11 @@ export interface ProductAttributes extends ZygoteAttributes {
   productDescription: string
   productImages: string
   productPrice: number
-  productDiscount: number
   productCategoryId: string
   productTotalSale: number
   productStock: number
+  productDiscount: number
+  productCondition: 'Baru' | 'Bekas'
   productWeight: number
   productVariant: string
 }
@@ -69,6 +70,11 @@ export const ProductModel = sequelize.define<ProductInstance>(
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    productCondition: {
+      type: DataTypes.ENUM('Baru', 'Bekas'),
+      allowNull: false,
+      defaultValue: 'Baru'
     },
     productWeight: {
       type: DataTypes.INTEGER,

@@ -50,13 +50,18 @@ module.exports = {
         allowNull: true,
         defaultValue: 0
       },
+      product_condition: {
+        type: Sequelize.ENUM('Baru', 'Bekas'),
+        allowNull: false,
+        defaultValue: 'Baru'
+      },
       product_discount: {
         type: Sequelize.INTEGER,
         allowNull: true,
         defaultValue: 0
       },
       product_variant: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       }
     })
