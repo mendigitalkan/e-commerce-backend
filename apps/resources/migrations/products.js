@@ -60,9 +60,15 @@ module.exports = {
         allowNull: true,
         defaultValue: 0
       },
-      product_variant: {
+      product_colors: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: true,
+        defaultValue: null
+      },
+      product_sizes: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        defaultValue: null
       }
     })
   },

@@ -16,7 +16,8 @@ export interface ProductAttributes extends ZygoteAttributes {
   productDiscount: number
   productCondition: 'Baru' | 'Bekas'
   productWeight: number
-  productVariant: string
+  productColors: string
+  productSizes: string
 }
 
 // we're telling the Model that 'id' is optional
@@ -86,9 +87,15 @@ export const ProductModel = sequelize.define<ProductInstance>(
       allowNull: true,
       defaultValue: 0
     },
-    productVariant: {
-      type: DataTypes.JSON,
-      allowNull: false
+    productColors: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null
+    },
+    productSizes: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null
     }
   },
   {
