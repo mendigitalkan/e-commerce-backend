@@ -23,7 +23,7 @@ module.exports = {
         allowNull: false
       },
       product_description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       product_price: {
