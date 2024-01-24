@@ -15,7 +15,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       setting_banner: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       setting_whatsapp_number: {
