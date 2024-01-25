@@ -21,6 +21,19 @@ module.exports = {
       cart_product_id: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      cart_product_color_selected: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      cart_product_size_selected: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      cart_total_item: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
       }
     })
   },

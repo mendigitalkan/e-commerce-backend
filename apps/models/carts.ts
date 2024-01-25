@@ -8,6 +8,9 @@ export interface CartsAttributes extends ZygoteAttributes {
   cartId: string
   cartUserId: string
   cartProductId: string
+  cartProductSizeSelected: string
+  cartProductColorSelected: string
+  cartTotalItem: number
 }
 
 // we're telling the Model that 'id' is optional
@@ -36,6 +39,19 @@ export const CartsModel = sequelize.define<CartsInstance>(
     cartProductId: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    cartProductColorSelected: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    cartProductSizeSelected: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    cartTotalItem: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   },
   {

@@ -36,6 +36,12 @@ export const updateCart = async (req: any, res: Response): Promise<any> => {
     const newData: CartsAttributes | any = {
       ...(requestBody.cartProductId.length > 0 && {
         cartProductId: requestBody.cartProductId
+      }),
+      ...(requestBody.cartProductColorSelected.length > 0 && {
+        cartProductColorSelected: requestBody.cartProductColorSelected
+      }),
+      ...(requestBody.cartProductSizeSelected.length > 0 && {
+        cartProductSizeSelected: requestBody.cartProductSizeSelected
       })
     }
 
