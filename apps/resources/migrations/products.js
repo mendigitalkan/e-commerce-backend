@@ -23,7 +23,7 @@ module.exports = {
         allowNull: false
       },
       product_description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       product_price: {
@@ -45,9 +45,30 @@ module.exports = {
         allowNull: false,
         defaultValue: 0
       },
-      product_variant: {
-        type: Sequelize.STRING,
-        allowNull: false
+      product_weight: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
+      product_condition: {
+        type: Sequelize.ENUM('Baru', 'Bekas'),
+        allowNull: false,
+        defaultValue: 'Baru'
+      },
+      product_discount: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
+      product_colors: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        defaultValue: null
+      },
+      product_sizes: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        defaultValue: null
       }
     })
   },

@@ -7,7 +7,7 @@ export interface JwtPayloadTypes {
 }
 
 export const generateAccessToken = (userId: JwtPayloadTypes): any => {
-  return jwt.sign(userId, CONFIG.secret.token ?? '', { expiresIn: '1800s' })
+  return jwt.sign(userId, CONFIG.secret.token ?? '', { expiresIn: '2592000s' })
 }
 
 export const verifyAccessToken = (token: string): any => {

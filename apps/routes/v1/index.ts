@@ -12,6 +12,7 @@ import { addressRoutes } from './addressRouter'
 import { transactionRoutes } from './transactionRoutes'
 import { statisticRouters } from './statisticRouter'
 import { cartRoutes } from './cartRouter'
+import { settingRouters } from './settingRouter'
 
 export const appRouterV1 = (app: Express) => {
   app.get('/api/v1', async (req: Request, res: Response) => await index(req, res))
@@ -25,4 +26,5 @@ export const appRouterV1 = (app: Express) => {
   transactionRoutes(app)
   statisticRouters(app)
   cartRoutes(app)
+  settingRouters(app)
 }

@@ -3,13 +3,14 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { Op } from 'sequelize'
 import { requestChecker } from '../../utilities/requestCheker'
-import { CartsModel, type CartsAttributes } from '../../models/carts'
+import { SettingsModel, type SettingsAttributes } from '../../models/settings'
+import { UserModel } from '../../models/user'
 
-export const updateCart = async (req: any, res: Response): Promise<any> => {
-  const requestBody = req.body as CartsAttributes
+export const updateSettings = async (req: any, res: Response): Promise<any> => {
+  const requestBody = req.body as SettingsAttributes
 
   const emptyField = requestChecker({
-    requireList: ['cartId'],
+    requireList: ['settingId'],
     requestData: requestBody
   })
 
@@ -20,35 +21,46 @@ export const updateCart = async (req: any, res: Response): Promise<any> => {
   }
 
   try {
-    const result = await CartsModel.findOne({
+    const checkRole = await UserModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },
-        cartId: { [Op.eq]: requestBody.cartId }
+        userId: req.body?.user?.userId,
+        userRole: { [Op.eq]: 'superAdmin' }
       }
     })
 
-    if (result == null) {
-      const message = 'not found!'
+    if (checkRole == null) {
+      const message = 'access denied!'
       const response = ResponseData.error(message)
       return res.status(StatusCodes.NOT_FOUND).json(response)
     }
 
-    const newData: CartsAttributes | any = {
-      ...(requestBody.cartProductId.length > 0 && {
-        cartProductId: requestBody.cartProductId
+    const result = await SettingsModel.findOne({
+      where: {
+        deleted: { [Op.eq]: 0 },
+        settingId: { [Op.eq]: requestBody.settingId }
+      }
+    })
+
+    if (result == null) {
+      const message = 'setting not found!'
+      const response = ResponseData.error(message)
+      return res.status(StatusCodes.NOT_FOUND).json(response)
+    }
+
+    const newData: SettingsAttributes | any = {
+      ...(requestBody.settingBanner.length > 0 && {
+        settingBanner: requestBody.settingBanner
       }),
-      ...(requestBody.cartProductColorSelected.length > 0 && {
-        cartProductColorSelected: requestBody.cartProductColorSelected
-      }),
-      ...(requestBody.cartProductSizeSelected.length > 0 && {
-        cartProductSizeSelected: requestBody.cartProductSizeSelected
+      ...(requestBody.settingWhatsappNumber.length > 0 && {
+        settingWhatsappNumber: requestBody.settingWhatsappNumber
       })
     }
 
-    await CartsModel.update(newData, {
+    await SettingsModel.update(newData, {
       where: {
         deleted: { [Op.eq]: 0 },
-        cartId: { [Op.eq]: requestBody.cartId }
+        settingId: { [Op.eq]: requestBody.settingId }
       }
     })
 

@@ -4,7 +4,6 @@ import express, { type Express } from 'express'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import { middleware } from './apps/middlewares'
 
 const app: Express = express()
 app.use(cors({ origin: true, credentials: true }))
