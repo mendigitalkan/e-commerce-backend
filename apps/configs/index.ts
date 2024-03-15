@@ -19,10 +19,10 @@ export const CONFIG = {
   maximumUploadFile: 1024,
   dataBase: {
     development: {
-      username: 'jasaapku_e-commerce',
-      password: 'e-commerce100%',
-      database: 'jasaapku_e-commerce',
-      host: '119.235.248.134',
+      username: 'root',
+      password: 'v4l3nt1n3d4y14022024',
+      database: 'e-commerce-database',
+      host: '119.235.254.103',
       dialect: 'mysql',
       logging: process.env.DB_LOG === 'true'
     },
